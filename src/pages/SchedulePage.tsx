@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Navigate, useNavigate } from 'react-router-dom'
 import { useScheduleMeeting } from '../features/meeting/model/useScheduleMeeting'
 import SlotList from '../features/meeting/ui/SlotList'
-import TimezoneSelect from '../features/meeting/ui/TimezoneSelect'
+import { TimezonePicker } from '../features/meeting/ui/TimezoneSelect'
 import { loadMeetingFromStorage, saveMeetingToStorage } from '../services/meetingStorage'
 import pageLayoutStyles from './PageLayout.module.css'
 import styles from './SchedulePage.module.css'
@@ -11,10 +11,9 @@ function SchedulePage() {
   const navigate = useNavigate()
   const [requestLog, setRequestLog] = useState('')
   const {
-    timezoneOptions,
     availableSlotsUtc,
     selectedTimezone,
-    selectedTimezoneValue,
+    selectedTimeZone,
     selectedSlotUtc,
     canConfirm,
     selectTimezone,
@@ -47,17 +46,13 @@ function SchedulePage() {
           Slots are received in UTC. You choose a timezone to see local time.
         </p>
 
-        <TimezoneSelect
-          options={timezoneOptions}
-          value={selectedTimezoneValue}
-          onChange={selectTimezone}
-        />
+        <TimezonePicker value={selectedTimezone} onChange={selectTimezone} />
 
         <h2>Available slots</h2>
         <SlotList
           slotsUtc={availableSlotsUtc}
           selectedSlotUtc={selectedSlotUtc}
-          timeZone={selectedTimezone.iana}
+          timeZone={selectedTimeZone}
           onSelectSlot={selectSlot}
         />
 

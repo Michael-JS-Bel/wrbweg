@@ -3,7 +3,7 @@ import {
   clearMeetingFromStorage,
   loadMeetingFromStorage,
 } from '../services/meetingStorage'
-import { formatSlotInTimezone, getTimezoneForMeeting } from '../utils/time'
+import { formatSlotInTimezone } from '../utils/time'
 import pageLayoutStyles from './PageLayout.module.css'
 import styles from './MeetingPage.module.css'
 
@@ -14,8 +14,6 @@ function MeetingPage() {
   if (!meeting) {
     return <Navigate to="/" replace />
   }
-
-  const meetingTimezone = getTimezoneForMeeting(meeting.timezoneId)
 
   function cancelMeeting() {
     clearMeetingFromStorage()
@@ -32,7 +30,7 @@ function MeetingPage() {
         <dl className={styles.details}>
           <div className={styles.detailItem}>
             <dt>Time in selected timezone</dt>
-            <dd>{formatSlotInTimezone(meeting.slotUtc, meetingTimezone.iana)}</dd>
+            <dd>{formatSlotInTimezone(meeting.slotUtc, meeting.timezoneId)}</dd>
           </div>
           <div className={styles.detailItem}>
             <dt>Selected timezone</dt>

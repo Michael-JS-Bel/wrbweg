@@ -1,10 +1,3 @@
-export type TimezoneOption = {
-  label: string
-  value: string
-  offset: number
-  iana: string
-}
-
 export type ScheduledMeeting = {
   slotUtc: string
   timezoneId: string

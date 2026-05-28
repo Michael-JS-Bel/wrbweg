@@ -10,11 +10,40 @@
   color: var(--text-h);
 }
 
-.select {
+.selectWrapper {
+  font: inherit;
+}
+
+.selectWrapper :global([class*='control']) {
   border: 1px solid var(--border);
   border-radius: 10px;
   background: var(--bg);
+  min-height: 42px;
+  box-shadow: none;
+}
+
+.selectWrapper :global([class*='control']:hover) {
+  border-color: var(--border);
+}
+
+.selectWrapper :global([class*='singleValue']),
+.selectWrapper :global([class*='input']) {
   color: var(--text-h);
-  font: inherit;
-  padding: 10px 12px;
+}
+
+.selectWrapper :global([class*='menu']) {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  z-index: 10;
+}
+
+.selectWrapper :global([class*='option']) {
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.selectWrapper :global([class*='option--is-focused']) {
+  background: var(--accent-bg);
 }

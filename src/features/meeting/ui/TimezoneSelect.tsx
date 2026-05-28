@@ -1,29 +1,24 @@
-import type { TimezoneOption } from '../../../types/meeting'
+import TimezoneSelectLib, { type ITimezone, type ITimezoneOption } from 'react-timezone-select'
 import styles from './TimezoneSelect.module.css'
 
-type TimezoneSelectProps = {
-  options: TimezoneOption[]
-  value: string
-  onChange: (timezoneValue: string) => void
+type TimezonePickerProps = {
+  value: ITimezone
+  onChange: (timezone: ITimezone) => void
 }
 
-function TimezoneSelect({ options, value, onChange }: TimezoneSelectProps) {
+export function TimezonePicker({ value, onChange }: TimezonePickerProps) {
+  function handleChange(timezone: ITimezoneOption) {
+    onChange(timezone)
+  }
+
   return (
     <label className={styles.field}>
       <span className={styles.label}>Timezone</span>
-      <select
-        className={styles.select}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-      >
-        {options.map((timezone) => (
-          <option key={timezone.value} value={timezone.value}>
-            {timezone.label}
-          </option>
-        ))}
-      </select>
+      <div className={styles.selectWrapper}>
+        <TimezoneSelectLib value={value} onChange={handleChange} />
+      </div>
     </label>
   )
 }
 
-export default TimezoneSelect
+export default TimezonePicker

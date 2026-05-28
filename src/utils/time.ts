@@ -1,24 +1,25 @@
-import { formatInTimeZone, getTimezoneOffset } from 'date-fns-tz'
-import { findTimezoneByValue, timezoneOptions } from '../constants/timezones'
+import { formatInTimeZone } from 'date-fns-tz'
+import type { ITimezone } from 'react-timezone-select'
 
 const SLOT_DISPLAY_FORMAT = 'EEE, dd MMM HH:mm'
 
-export function formatSlotInTimezone(utcIso: string, iana: string) {
-  return formatInTimeZone(utcIso, iana, SLOT_DISPLAY_FORMAT)
+export function getTimezoneIana(timezone: ITimezone) {
+  return typeof timezone === 'string' ? timezone : timezone.value
 }
 
-export function getDefaultTimezoneValue() {
-  const now = new Date()
-  const browserIana = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const browserOffset = getTimezoneOffset(browserIana, now)
+export function normalizeTimezone(timezone: ITimezone) {
+  if (typeof timezone === 'string') {
+    return { value: timezone, label: timezone }
+  }
 
-  const matched = timezoneOptions.find(
-    (timezone) => getTimezoneOffset(timezone.iana, now) === browserOffset,
-  )
-
-  return matched?.value ?? 'UTC'
+  return { value: timezone.value, label: timezone.label }
 }
 
-export function getTimezoneForMeeting(timezoneId: string) {
-  return findTimezoneByValue(timezoneId)
+export function getDefaultTimezone(): ITimezone {
+  const value = Intl.DateTimeFormat().resolvedOptions().timeZone
+  return { value, label: value }
+}
+
+export function formatSlotInTimezone(utcIso: string, timeZone: string) {
+  return formatInTimeZone(utcIso, timeZone, SLOT_DISPLAY_FORMAT)
 }

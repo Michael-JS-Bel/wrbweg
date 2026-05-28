@@ -1,19 +1,18 @@
-import { useMemo, useState } from 'react'
-import { findTimezoneByValue, timezoneOptions } from '../../../constants/timezones'
+import { useState } from 'react'
+import type { ITimezone } from 'react-timezone-select'
 import { createMeetingPayload, getAvailableSlotsUtc } from '../../../services/slots'
 import type { ScheduledMeeting } from '../../../types/meeting'
-import { getDefaultTimezoneValue } from '../../../utils/time'
+import {
+  getDefaultTimezone,
+  getTimezoneIana,
+  normalizeTimezone,
+} from '../../../utils/time'
 
 export function useScheduleMeeting() {
-  const [selectedTimezoneValue, setSelectedTimezoneValue] = useState(getDefaultTimezoneValue)
+  const [selectedTimezone, setSelectedTimezone] = useState<ITimezone>(getDefaultTimezone)
   const [selectedSlotUtc, setSelectedSlotUtc] = useState<string | null>(null)
 
   const availableSlotsUtc = getAvailableSlotsUtc()
-  const selectedTimezone = useMemo(
-    () => findTimezoneByValue(selectedTimezoneValue),
-    [selectedTimezoneValue],
-  )
-
   const canConfirm = selectedSlotUtc !== null
 
   function buildMeetingDraft(): {
@@ -24,24 +23,24 @@ export function useScheduleMeeting() {
       return null
     }
 
-    const payload = createMeetingPayload(selectedSlotUtc, selectedTimezone.value)
+    const timezone = normalizeTimezone(selectedTimezone)
+    const payload = createMeetingPayload(selectedSlotUtc, timezone.value)
     const meeting: ScheduledMeeting = {
       slotUtc: selectedSlotUtc,
-      timezoneId: selectedTimezone.value,
-      timezoneLabel: selectedTimezone.label,
+      timezoneId: timezone.value,
+      timezoneLabel: timezone.label,
     }
 
     return { meeting, payload }
   }
 
   return {
-    timezoneOptions,
     availableSlotsUtc,
     selectedTimezone,
-    selectedTimezoneValue,
     selectedSlotUtc,
+    selectedTimeZone: getTimezoneIana(selectedTimezone),
     canConfirm,
-    selectTimezone: setSelectedTimezoneValue,
+    selectTimezone: setSelectedTimezone,
     selectSlot: setSelectedSlotUtc,
     buildMeetingDraft,
   }
