@@ -4,7 +4,7 @@ import styles from './TimezoneSelect.module.css'
 type TimezoneSelectProps = {
   options: TimezoneOption[]
   value: string
-  onChange: (timezoneId: string) => void
+  onChange: (timezoneValue: string) => void
 }
 
 function TimezoneSelect({ options, value, onChange }: TimezoneSelectProps) {
@@ -17,7 +17,7 @@ function TimezoneSelect({ options, value, onChange }: TimezoneSelectProps) {
         onChange={(event) => onChange(event.target.value)}
       >
         {options.map((timezone) => (
-          <option key={timezone.id} value={timezone.id}>
+          <option key={timezone.value} value={timezone.value}>
             {timezone.label}
           </option>
         ))}

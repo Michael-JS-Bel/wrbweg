@@ -1,7 +1,8 @@
 export type TimezoneOption = {
-  id: string
   label: string
-  offsetMinutes: number
+  value: string
+  offset: number
+  iana: string
 }
 
 export type ScheduledMeeting = {

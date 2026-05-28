@@ -1,10 +1,9 @@
 import { Navigate, useNavigate } from 'react-router-dom'
-import { timezoneOptions } from '../constants/timezones'
 import {
   clearMeetingFromStorage,
   loadMeetingFromStorage,
 } from '../services/meetingStorage'
-import { formatInTimezone } from '../utils/time'
+import { formatSlotInTimezone, getTimezoneForMeeting } from '../utils/time'
 import pageLayoutStyles from './PageLayout.module.css'
 import styles from './MeetingPage.module.css'
 
@@ -16,9 +15,7 @@ function MeetingPage() {
     return <Navigate to="/" replace />
   }
 
-  const meetingTimezone =
-    timezoneOptions.find((timezone) => timezone.id === meeting.timezoneId) ??
-    timezoneOptions[0]
+  const meetingTimezone = getTimezoneForMeeting(meeting.timezoneId)
 
   function cancelMeeting() {
     clearMeetingFromStorage()
@@ -35,7 +32,7 @@ function MeetingPage() {
         <dl className={styles.details}>
           <div className={styles.detailItem}>
             <dt>Time in selected timezone</dt>
-            <dd>{formatInTimezone(meeting.slotUtc, meetingTimezone.offsetMinutes)}</dd>
+            <dd>{formatSlotInTimezone(meeting.slotUtc, meetingTimezone.iana)}</dd>
           </div>
           <div className={styles.detailItem}>
             <dt>Selected timezone</dt>

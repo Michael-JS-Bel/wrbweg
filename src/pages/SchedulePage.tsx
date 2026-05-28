@@ -14,10 +14,11 @@ function SchedulePage() {
     timezoneOptions,
     availableSlotsUtc,
     selectedTimezone,
-    selectedTimezoneId,
+    selectedTimezoneValue,
     selectedSlotUtc,
-    setSelectedTimezoneId,
-    setSelectedSlotUtc,
+    canConfirm,
+    selectTimezone,
+    selectSlot,
     buildMeetingDraft,
   } = useScheduleMeeting()
 
@@ -48,22 +49,22 @@ function SchedulePage() {
 
         <TimezoneSelect
           options={timezoneOptions}
-          value={selectedTimezoneId}
-          onChange={setSelectedTimezoneId}
+          value={selectedTimezoneValue}
+          onChange={selectTimezone}
         />
 
         <h2>Available slots</h2>
         <SlotList
           slotsUtc={availableSlotsUtc}
           selectedSlotUtc={selectedSlotUtc}
-          timezoneOffsetMinutes={selectedTimezone.offsetMinutes}
-          onSelectSlot={setSelectedSlotUtc}
+          timeZone={selectedTimezone.iana}
+          onSelectSlot={selectSlot}
         />
 
         <button
           type="button"
           className={styles.button}
-          disabled={!selectedSlotUtc}
+          disabled={!canConfirm}
           onClick={confirmSlot}
         >
           Confirm selected slot

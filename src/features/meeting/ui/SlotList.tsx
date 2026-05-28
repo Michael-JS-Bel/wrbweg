@@ -1,19 +1,14 @@
-import { formatInTimezone } from '../../../utils/time'
+import { formatSlotInTimezone } from '../../../utils/time'
 import styles from './SlotList.module.css'
 
 type SlotListProps = {
   slotsUtc: string[]
   selectedSlotUtc: string | null
-  timezoneOffsetMinutes: number
+  timeZone: string
   onSelectSlot: (slotUtc: string) => void
 }
 
-function SlotList({
-  slotsUtc,
-  selectedSlotUtc,
-  timezoneOffsetMinutes,
-  onSelectSlot,
-}: SlotListProps) {
+function SlotList({ slotsUtc, selectedSlotUtc, timeZone, onSelectSlot }: SlotListProps) {
   return (
     <ul className={styles.slotList}>
       {slotsUtc.map((slotUtc) => {
@@ -25,7 +20,7 @@ function SlotList({
               className={`${styles.slotButton} ${isActive ? styles.active : ''}`}
               onClick={() => onSelectSlot(slotUtc)}
             >
-              <span>{formatInTimezone(slotUtc, timezoneOffsetMinutes)}</span>
+              <span>{formatSlotInTimezone(slotUtc, timeZone)}</span>
               <small className={styles.utcText}>UTC: {slotUtc}</small>
             </button>
           </li>

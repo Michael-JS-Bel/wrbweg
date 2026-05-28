@@ -1,23 +1,24 @@
-import { timezoneOptions } from '../constants/timezones'
+import { formatInTimeZone, getTimezoneOffset } from 'date-fns-tz'
+import { findTimezoneByValue, timezoneOptions } from '../constants/timezones'
 
-export function getDefaultTimezoneId() {
-  const browserOffset = -new Date().getTimezoneOffset()
-  const matchedTimezone = timezoneOptions.find(
-    (timezone) => timezone.offsetMinutes === browserOffset,
-  )
-  return matchedTimezone?.id ?? 'UTC'
+const SLOT_DISPLAY_FORMAT = 'EEE, dd MMM HH:mm'
+
+export function formatSlotInTimezone(utcIso: string, iana: string) {
+  return formatInTimeZone(utcIso, iana, SLOT_DISPLAY_FORMAT)
 }
 
-export function formatInTimezone(utcIso: string, offsetMinutes: number) {
-  const utcDate = new Date(utcIso)
-  const shiftedDate = new Date(utcDate.getTime() + offsetMinutes * 60 * 1000)
+export function getDefaultTimezoneValue() {
+  const now = new Date()
+  const browserIana = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const browserOffset = getTimezoneOffset(browserIana, now)
 
-  return new Intl.DateTimeFormat('en-US', {
-    weekday: 'short',
-    day: '2-digit',
-    month: 'short',
-    hour: '2-digit',
-    minute: '2-digit',
-    hour12: false,
-  }).format(shiftedDate)
+  const matched = timezoneOptions.find(
+    (timezone) => getTimezoneOffset(timezone.iana, now) === browserOffset,
+  )
+
+  return matched?.value ?? 'UTC'
+}
+
+export function getTimezoneForMeeting(timezoneId: string) {
+  return findTimezoneByValue(timezoneId)
 }
