@@ -1,0 +1,26 @@
+.button {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #fff;
+  background: var(--accent);
+  cursor: pointer;
+}
+
+.button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.payload {
+  margin: 0;
+  text-align: left;
+  font-size: 13px;
+  line-height: 1.4;
+  background: var(--code-bg);
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 12px;
+  overflow-x: auto;
+}

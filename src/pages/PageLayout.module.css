@@ -1,0 +1,31 @@
+.container {
+  min-height: 100svh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+
+.panel {
+  width: min(100%, 720px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px;
+  background: var(--bg);
+  box-shadow: var(--shadow);
+  display: grid;
+  gap: 16px;
+}
+
+.description {
+  font-size: 15px;
+}
+
+@media (max-width: 640px) {
+  .container {
+    padding: 12px;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+}

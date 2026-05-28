@@ -1,0 +1,20 @@
+.field {
+  display: grid;
+  gap: 8px;
+  text-align: left;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-h);
+}
+
+.select {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: var(--bg);
+  color: var(--text-h);
+  font: inherit;
+  padding: 10px 12px;
+}

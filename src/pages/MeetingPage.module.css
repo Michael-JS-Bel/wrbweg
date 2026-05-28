@@ -1,0 +1,33 @@
+.details {
+  margin: 0;
+  display: grid;
+  gap: 10px;
+  text-align: left;
+}
+
+.detailItem {
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.details dt {
+  font-size: 13px;
+  color: var(--text);
+}
+
+.details dd {
+  margin: 6px 0 0;
+  color: var(--text-h);
+  font-weight: 600;
+}
+
+.cancelButton {
+  border: 1px solid transparent;
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  color: #fff;
+  background: #dc2626;
+  cursor: pointer;
+}

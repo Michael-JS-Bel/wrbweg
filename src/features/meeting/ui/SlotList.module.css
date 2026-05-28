@@ -1,0 +1,29 @@
+.slotList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 10px;
+}
+
+.slotButton {
+  width: 100%;
+  display: grid;
+  gap: 6px;
+  text-align: left;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+  background: var(--bg);
+  color: var(--text-h);
+  cursor: pointer;
+}
+
+.active {
+  border-color: var(--accent);
+  background: var(--accent-bg);
+}
+
+.utcText {
+  color: var(--text);
+}
